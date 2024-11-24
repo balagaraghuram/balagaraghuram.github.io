@@ -9,20 +9,52 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
-        #animations {
+
+        /* Animated Concept Section */
+        #concept-animation {
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 10%;
+            right: 5%;
             width: 300px;
-            border: 2px solid #007bff;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 5px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            height: 150px;
+            padding: 20px;
+            background: linear-gradient(145deg, #007bff, #0047ab);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            overflow: hidden;
         }
-        #animations h3 {
-            color: #007bff;
+
+        #concept-text {
+            animation: fadeSlide 10s infinite;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            40% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
         }
     </style>
 </head>
@@ -30,182 +62,43 @@
     <h1 style="text-align: center;">Advanced Weather-Driven Hospital Activity Prediction</h1>
     <h3 style="text-align: center; color: gray;">Project by Prof. Hui Li, Department of Mathematics, University of Birmingham</h3>
 
-    <!-- Animation Sidebar -->
-    <div id="animations">
-        <h3>Why It Matters</h3>
-        <ul>
-            <li>Weather conditions significantly influence hospital admissions in the UK.</li>
-            <li>Data-driven predictions can help the UK government allocate healthcare resources efficiently.</li>
-            <li>Predictive models empower hospitals to prepare for extreme weather events.</li>
-        </ul>
+    <!-- Animated Concept Representation -->
+    <div id="concept-animation">
+        <div id="concept-text">
+            <!-- Initial Content -->
+        </div>
     </div>
 
-    <!-- File Upload -->
+    <script>
+        // Dynamic Concept Points
+        const conceptPoints = [
+            "Weather conditions significantly influence hospital admissions in the UK.",
+            "Data-driven predictions can help allocate healthcare resources efficiently.",
+            "Predictive models empower hospitals to prepare for extreme weather events.",
+            "Proactive measures reduce strain on ICU and ED during weather extremes.",
+            "Collaboration between science and policy ensures effective decision-making."
+        ];
+
+        let currentPoint = 0;
+
+        function updateConceptText() {
+            const conceptText = document.getElementById("concept-text");
+            conceptText.innerHTML = `<p>${conceptPoints[currentPoint]}</p>`;
+            currentPoint = (currentPoint + 1) % conceptPoints.length; // Cycle through points
+        }
+
+        // Update text every 4 seconds
+        updateConceptText(); // Initial call
+        setInterval(updateConceptText, 4000);
+    </script>
+
+    <!-- Main Content -->
     <div style="text-align: center; margin-bottom: 20px;">
         <label for="fileUpload" style="font-size: 18px;">Upload Your Data File (CSV Format):</label>
         <input type="file" id="fileUpload" accept=".csv" style="margin-left: 10px;">
     </div>
 
-    <!-- Real-Time Insights -->
-    <div id="insights" style="margin: 20px; font-size: 16px;">
-        <h2>Real-Time Insights</h2>
-        <p id="analysis-summary">Upload your data to see detailed analysis, predictions, and interpretations.</p>
-    </div>
-
-    <!-- Plot -->
     <div id="plot" style="width: 100%; height: 600px;"></div>
     <div id="prediction-plot" style="width: 100%; height: 600px; margin-top: 20px;"></div>
-
-    <script>
-        let dates = [];
-        let temperature = [];
-        let rainfall = [];
-        let edAdmissions = [];
-        let icuAdmissions = [];
-
-        function renderPlots() {
-            // Scatter plot for visualization
-            const scatterTrace = {
-                x: temperature,
-                y: edAdmissions,
-                mode: 'markers',
-                marker: {
-                    size: rainfall.map(r => Math.sqrt(r) * 5),
-                    color: icuAdmissions,
-                    colorscale: 'Viridis',
-                    colorbar: { title: 'ICU Admissions' },
-                    showscale: true
-                },
-                text: dates.map((date, i) =>
-                    `Date: ${date}<br>Temperature: ${temperature[i].toFixed(1)}°C<br>Rainfall: ${rainfall[i].toFixed(1)} mm<br>ED Admissions: ${edAdmissions[i]}<br>ICU Admissions: ${icuAdmissions[i]}`
-                ),
-                hoverinfo: 'text'
-            };
-
-            const layout = {
-                title: 'Weather Influence on Hospital Activity',
-                xaxis: { title: 'Temperature (°C)' },
-                yaxis: { title: 'Emergency Department Admissions' },
-                template: 'plotly_white',
-                hovermode: 'closest'
-            };
-
-            Plotly.newPlot('plot', [scatterTrace], layout);
-
-            generatePredictions();
-        }
-
-        function generateInsights() {
-            // Calculate averages
-            const avgTemperature = (temperature.reduce((a, b) => a + b, 0) / temperature.length).toFixed(2);
-            const avgRainfall = (rainfall.reduce((a, b) => a + b, 0) / rainfall.length).toFixed(2);
-            const avgED = (edAdmissions.reduce((a, b) => a + b, 0) / edAdmissions.length).toFixed(2);
-            const avgICU = (icuAdmissions.reduce((a, b) => a + b, 0) / icuAdmissions.length).toFixed(2);
-
-            // Determine key patterns
-            const highTempDays = temperature.filter(t => t > 25).length;
-            const highRainDays = rainfall.filter(r => r > 40).length;
-
-            // Generate interpretation text
-            const insights = `
-                <ul>
-                    <li>Average Temperature: ${avgTemperature} °C</li>
-                    <li>Average Rainfall: ${avgRainfall} mm</li>
-                    <li>Average ED Admissions: ${avgED}</li>
-                    <li>Average ICU Admissions: ${avgICU}</li>
-                    <li>Days with High Temperatures (>25°C): ${highTempDays}</li>
-                    <li>Days with High Rainfall (>40 mm): ${highRainDays}</li>
-                </ul>
-                <h3>Interpretation:</h3>
-                <p>
-                    High temperatures correlate with ICU admissions due to heat-related illnesses. Rainfall is associated with increased ED visits, likely due to injuries and respiratory conditions.
-                </p>
-            `;
-
-            document.getElementById('analysis-summary').innerHTML = insights;
-        }
-
-        function generatePredictions() {
-            // Simple Linear Regression for Predictions (ED Admissions ~ Temperature)
-            const n = temperature.length;
-            const meanX = temperature.reduce((a, b) => a + b, 0) / n;
-            const meanY = edAdmissions.reduce((a, b) => a + b, 0) / n;
-
-            let numerator = 0, denominator = 0;
-            for (let i = 0; i < n; i++) {
-                numerator += (temperature[i] - meanX) * (edAdmissions[i] - meanY);
-                denominator += (temperature[i] - meanX) ** 2;
-            }
-            const slope = numerator / denominator;
-            const intercept = meanY - slope * meanX;
-
-            // Predicted ED Admissions
-            const predictedED = temperature.map(t => slope * t + intercept);
-
-            // Plot predictions
-            const predictionTrace = {
-                x: temperature,
-                y: predictedED,
-                mode: 'lines',
-                name: 'Predicted ED Admissions',
-                line: { color: 'red' }
-            };
-
-            const actualTrace = {
-                x: temperature,
-                y: edAdmissions,
-                mode: 'markers',
-                name: 'Actual ED Admissions',
-                marker: { color: 'blue' }
-            };
-
-            const predictionLayout = {
-                title: 'Prediction of ED Admissions Based on Temperature',
-                xaxis: { title: 'Temperature (°C)' },
-                yaxis: { title: 'ED Admissions' },
-                template: 'plotly_white'
-            };
-
-            Plotly.newPlot('prediction-plot', [actualTrace, predictionTrace], predictionLayout);
-        }
-
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const csvData = e.target.result;
-                    processData(csvData);
-                };
-                reader.readAsText(file);
-            }
-        }
-
-        function processData(csvData) {
-            const rows = csvData.split('\n').slice(1); // Skip header
-            dates = [];
-            temperature = [];
-            rainfall = [];
-            edAdmissions = [];
-            icuAdmissions = [];
-
-            rows.forEach(row => {
-                const cols = row.split(',');
-                if (cols.length >= 5) {
-                    dates.push(cols[0]); // Date
-                    temperature.push(parseFloat(cols[1])); // Temperature
-                    rainfall.push(parseFloat(cols[2])); // Rainfall
-                    edAdmissions.push(parseInt(cols[3])); // ED Admissions
-                    icuAdmissions.push(parseInt(cols[4])); // ICU Admissions
-                }
-            });
-
-            renderPlots();
-            generateInsights();
-        }
-
-        // Add event listener for file upload
-        document.getElementById('fileUpload').addEventListener('change', handleFileUpload);
-    </script>
 </body>
 </html>
