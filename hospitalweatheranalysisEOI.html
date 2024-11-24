@@ -14,73 +14,91 @@
             line-height: 1.6;
         }
 
-        #password-prompt {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f9f9f9;
-        }
-
-        #password-form {
-            text-align: center;
+        /* Animated Concept Section */
+        #concept-animation {
+            position: fixed;
+            top: 10%;
+            right: 5%;
+            width: 300px;
+            height: 150px;
             padding: 20px;
-            border: 2px solid #007bff;
-            background: white;
+            background: linear-gradient(145deg, #007bff, #0047ab);
+            color: white;
             border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            overflow: hidden;
         }
 
-        #content {
-            display: none;
+        #concept-text {
+            animation: fadeSlide 10s infinite;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            40% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Password Prompt -->
-    <div id="password-prompt">
-        <div id="password-form">
-            <h2>Enter Password</h2>
-            <input type="password" id="password" placeholder="Enter password" style="padding: 5px; width: 200px;">
-            <br><br>
-            <button onclick="checkPassword()" style="padding: 5px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                Submit
-            </button>
-            <p id="error-message" style="color: red; display: none;">Incorrect password. Try again.</p>
+    <h1 style="text-align: center;">Advanced Weather-Driven Hospital Activity Prediction</h1>
+    <h3 style="text-align: center; color: gray;">Project by Prof. Hui Li, Department of Mathematics, University of Birmingham</h3>
+
+    <!-- Animated Concept Representation -->
+    <div id="concept-animation">
+        <div id="concept-text">
+            <!-- Initial Content -->
         </div>
-    </div>
-
-    <!-- Protected Content -->
-    <div id="content">
-        <h1 style="text-align: center;">Advanced Weather-Driven Hospital Activity Prediction</h1>
-        <h3 style="text-align: center; color: gray;">Project by Prof. Hui Li, Department of Mathematics, University of Birmingham</h3>
-
-        <!-- File Upload -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <label for="fileUpload" style="font-size: 18px;">Upload Your Data File (CSV Format):</label>
-            <input type="file" id="fileUpload" accept=".csv" style="margin-left: 10px;">
-        </div>
-
-        <div id="plot" style="width: 100%; height: 600px;"></div>
-        <div id="prediction-plot" style="width: 100%; height: 600px; margin-top: 20px;"></div>
     </div>
 
     <script>
-        const correctPassword = "secure123"; // Set your desired password here
+        // Dynamic Concept Points
+        const conceptPoints = [
+            "Weather conditions significantly influence hospital admissions in the UK.",
+            "Data-driven predictions can help allocate healthcare resources efficiently.",
+            "Predictive models empower hospitals to prepare for extreme weather events.",
+            "Proactive measures reduce strain on ICU and ED during weather extremes.",
+            "Collaboration between science and policy ensures effective decision-making."
+        ];
 
-        function checkPassword() {
-            const enteredPassword = document.getElementById("password").value;
-            const errorMessage = document.getElementById("error-message");
+        let currentPoint = 0;
 
-            if (enteredPassword === correctPassword) {
-                // Hide password prompt and show content
-                document.getElementById("password-prompt").style.display = "none";
-                document.getElementById("content").style.display = "block";
-            } else {
-                // Show error message
-                errorMessage.style.display = "block";
-            }
+        function updateConceptText() {
+            const conceptText = document.getElementById("concept-text");
+            conceptText.innerHTML = `<p>${conceptPoints[currentPoint]}</p>`;
+            currentPoint = (currentPoint + 1) % conceptPoints.length; // Cycle through points
         }
+
+        // Update text every 4 seconds
+        updateConceptText(); // Initial call
+        setInterval(updateConceptText, 4000);
     </script>
+
+    <!-- Main Content -->
+    <div style="text-align: center; margin-bottom: 20px;">
+        <label for="fileUpload" style="font-size: 18px;">Upload Your Data File (CSV Format):</label>
+        <input type="file" id="fileUpload" accept=".csv" style="margin-left: 10px;">
+    </div>
+
+    <div id="plot" style="width: 100%; height: 600px;"></div>
+    <div id="prediction-plot" style="width: 100%; height: 600px; margin-top: 20px;"></div>
 </body>
 </html>
