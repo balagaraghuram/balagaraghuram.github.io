@@ -1,40 +1,63 @@
-import pandas as pd
-import numpy as np
-import plotly.express as px
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Activity vs Weather Patterns</title>
+    <!-- Load Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1 style="text-align: center;">Influence of Weather on Hospital Activity</h1>
+    <div id="plot" style="width: 100%; height: 600px;"></div>
+    <script>
+        // Generate synthetic data
+        const dates = [];
+        const temperature = [];
+        const rainfall = [];
+        const edAdmissions = [];
+        const icuAdmissions = [];
+        
+        const startDate = new Date("2024-01-01");
+        const endDate = new Date("2024-12-31");
+        let currentDate = startDate;
 
-# Generate sample synthetic data
-np.random.seed(42)
-dates = pd.date_range(start="2024-01-01", end="2024-12-31", freq="D")
-data = pd.DataFrame({
-    "Date": dates,
-    "Temperature": np.random.uniform(0, 30, len(dates)),  # Random temperature (0-30°C)
-    "Rainfall": np.random.uniform(0, 50, len(dates)),  # Random rainfall (0-50 mm)
-    "ED_Admissions": np.random.poisson(lam=50, size=len(dates)),  # Simulated ED admissions
-    "ICU_Admissions": np.random.poisson(lam=10, size=len(dates)),  # Simulated ICU admissions
-})
+        while (currentDate <= endDate) {
+            dates.push(currentDate.toISOString().split('T')[0]); // Format date as YYYY-MM-DD
+            temperature.push(Math.random() * 30); // Random temperature (0-30°C)
+            rainfall.push(Math.random() * 50); // Random rainfall (0-50 mm)
+            edAdmissions.push(Math.floor(Math.random() * 100)); // Random ED admissions
+            icuAdmissions.push(Math.floor(Math.random() * 20)); // Random ICU admissions
+            currentDate.setDate(currentDate.getDate() + 1); // Increment by 1 day
+        }
 
-# Create the interactive Plotly figure
-fig = px.scatter(
-    data,
-    x="Temperature",
-    y="ED_Admissions",
-    size="Rainfall",
-    color="ICU_Admissions",
-    animation_frame=data["Date"].dt.strftime("%Y-%m-%d"),  # Use Date for animation
-    title="Influence of Weather on Hospital Activity",
-    labels={"Temperature": "Temperature (°C)", "ED_Admissions": "ED Admissions"},
-    hover_data=["ICU_Admissions", "Rainfall"],
-)
+        // Create traces for scatter plot
+        const trace = {
+            x: temperature,
+            y: edAdmissions,
+            mode: "markers",
+            marker: {
+                size: rainfall.map(r => Math.sqrt(r) * 5), // Scale marker size by rainfall
+                color: icuAdmissions,
+                colorscale: "Viridis",
+                colorbar: { title: "ICU Admissions" },
+                showscale: true
+            },
+            text: dates.map((date, i) => 
+                `Date: ${date}<br>Temperature: ${temperature[i].toFixed(1)}°C<br>Rainfall: ${rainfall[i].toFixed(1)} mm<br>ED Admissions: ${edAdmissions[i]}<br>ICU Admissions: ${icuAdmissions[i]}`),
+            hoverinfo: "text"
+        };
 
-# Update figure layout
-fig.update_layout(
-    xaxis_title="Temperature (°C)",
-    yaxis_title="Emergency Department Admissions",
-    coloraxis_colorbar=dict(title="ICU Admissions"),
-    template="plotly_white",
-)
+        const layout = {
+            title: "Hospital Admissions vs Weather Patterns",
+            xaxis: { title: "Temperature (°C)" },
+            yaxis: { title: "Emergency Department Admissions" },
+            template: "plotly_white",
+            hovermode: "closest"
+        };
 
-# Save the Plotly figure as an HTML file
-fig.write_html("hospital_weather_analysis.html")
-
-print("HTML file generated: hospital_weather_analysis.html")
+        // Render the plot
+        Plotly.newPlot("plot", [trace], layout);
+    </script>
+</body>
+</html>
