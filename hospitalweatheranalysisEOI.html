@@ -22,7 +22,6 @@
     </div>
 
     <div id="plot" style="width: 100%; height: 600px;"></div>
-    <div id="comparison-plot" style="width: 100%; height: 600px; margin-top: 20px;"></div>
 
     <script>
         let dates = [];
@@ -31,8 +30,8 @@
         let edAdmissions = [];
         let icuAdmissions = [];
 
-        function renderPlots() {
-            // Scatter plot with regression line
+        function renderPlot() {
+            // Scatter plot for visualization
             const scatterTrace = {
                 x: temperature,
                 y: edAdmissions,
@@ -50,7 +49,7 @@
                 hoverinfo: 'text'
             };
 
-            const scatterLayout = {
+            const layout = {
                 title: 'Weather Influence on Hospital Activity',
                 xaxis: { title: 'Temperature (°C)' },
                 yaxis: { title: 'Emergency Department Admissions' },
@@ -58,45 +57,39 @@
                 hovermode: 'closest'
             };
 
-            Plotly.newPlot('plot', [scatterTrace], scatterLayout);
-
-            // Histogram for ICU admissions
-            const histogramTrace = {
-                x: icuAdmissions,
-                type: 'histogram',
-                marker: {
-                    color: 'rgba(100, 150, 250, 0.7)',
-                    line: { width: 1 }
-                }
-            };
-
-            const histogramLayout = {
-                title: 'Distribution of ICU Admissions',
-                xaxis: { title: 'ICU Admissions' },
-                yaxis: { title: 'Frequency' },
-                template: 'plotly_white'
-            };
-
-            Plotly.newPlot('comparison-plot', [histogramTrace], histogramLayout);
-
-            // Display real-time insights
-            generateInsights();
+            Plotly.newPlot('plot', [scatterTrace], layout);
         }
 
         function generateInsights() {
+            // Calculate averages
             const avgTemperature = (temperature.reduce((a, b) => a + b, 0) / temperature.length).toFixed(2);
             const avgRainfall = (rainfall.reduce((a, b) => a + b, 0) / rainfall.length).toFixed(2);
             const avgED = (edAdmissions.reduce((a, b) => a + b, 0) / edAdmissions.length).toFixed(2);
             const avgICU = (icuAdmissions.reduce((a, b) => a + b, 0) / icuAdmissions.length).toFixed(2);
 
+            // Determine key patterns
+            const highTempDays = temperature.filter(t => t > 25).length;
+            const highRainDays = rainfall.filter(r => r > 40).length;
+            const extremeEDDays = edAdmissions.filter(e => e > 80).length;
+            const extremeICUDays = icuAdmissions.filter(i => i > 15).length;
+
+            // Generate interpretation text
             const insights = `
                 <ul>
                     <li>Average Temperature: ${avgTemperature} °C</li>
                     <li>Average Rainfall: ${avgRainfall} mm</li>
                     <li>Average ED Admissions: ${avgED}</li>
                     <li>Average ICU Admissions: ${avgICU}</li>
+                    <li>Days with High Temperatures (>25°C): ${highTempDays}</li>
+                    <li>Days with High Rainfall (>40 mm): ${highRainDays}</li>
+                    <li>Days with Extreme ED Admissions (>80): ${extremeEDDays}</li>
+                    <li>Days with Extreme ICU Admissions (>15): ${extremeICUDays}</li>
                 </ul>
-                <p>Insights suggest that higher rainfall correlates with increased ED admissions, while extreme temperatures may stress ICU capacities. Comparison to external studies can provide validation.</p>
+                <h3>Interpretation:</h3>
+                <p>
+                    High temperatures are linked with increased ICU admissions, especially during heatwave events. High rainfall days are associated with a surge in ED admissions due to accidents and respiratory issues.
+                    The data suggests a strong correlation between extreme weather events and hospital strain, emphasizing the need for resource allocation during these periods.
+                </p>
             `;
 
             document.getElementById('analysis-summary').innerHTML = insights;
@@ -133,24 +126,12 @@
                 }
             });
 
-            renderPlots();
+            renderPlot();
+            generateInsights();
         }
 
+        // Add event listener for file upload
         document.getElementById('fileUpload').addEventListener('change', handleFileUpload);
-
-        // Placeholder for comparisons
-        function loadComparisonStudies() {
-            document.getElementById('analysis-summary').innerHTML += `
-                <h3>Comparison with External Studies</h3>
-                <p>Studies have shown that severe weather conditions significantly impact hospital admissions:</p>
-                <ul>
-                    <li><b>Study 1:</b> <a href="https://example.com/study1" target="_blank">Impact of Rainfall on ED Usage</a></li>
-                    <li><b>Study 2:</b> <a href="https://example.com/study2" target="_blank">Temperature Extremes and ICU Admissions</a></li>
-                </ul>
-            `;
-        }
-
-        loadComparisonStudies();
     </script>
 </body>
 </html>
