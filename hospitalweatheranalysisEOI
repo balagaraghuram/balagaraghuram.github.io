@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+import plotly.express as px
+
+# Sample synthetic data generation
+np.random.seed(42)
+dates = pd.date_range(start="2024-01-01", end="2024-12-31", freq="D")
+data = pd.DataFrame({
+    "Date": dates,
+    "Temperature": np.random.uniform(0, 30, len(dates)),  # Random temperature (0-30°C)
+    "Rainfall": np.random.uniform(0, 50, len(dates)),  # Random rainfall (0-50 mm)
+    "ED_Admissions": np.random.poisson(lam=50, size=len(dates)),  # Simulated ED admissions
+    "ICU_Admissions": np.random.poisson(lam=10, size=len(dates)),  # Simulated ICU admissions
+})
+
+# Create the interactive Plotly figure
+fig = px.scatter(
+    data,
+    x="Temperature",
+    y="ED_Admissions",
+    size="Rainfall",
+    color="ICU_Admissions",
+    animation_frame=data["Date"].dt.strftime("%Y-%m-%d"),  # Use Date for animation
+    title="Influence of Weather on Hospital Activity",
+    labels={"Temperature": "Temperature (°C)", "ED_Admissions": "ED Admissions"},
+    hover_data=["ICU_Admissions", "Rainfall"],
+)
+
+fig.update_layout(
+    xaxis_title="Temperature (°C)",
+    yaxis_title="Emergency Department Admissions",
+    coloraxis_colorbar=dict(title="ICU Admissions"),
+    template="plotly_white",
+)
+
+# Save the Plotly figure as an HTML file
+fig.write_html("hospital_weather_analysis.html")
+
+print("HTML file generated: hospital_weather_analysis.html")
