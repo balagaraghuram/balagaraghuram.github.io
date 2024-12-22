@@ -83,7 +83,8 @@
       text-align: center;
       margin: 30px 0;
     }
-    .download-link {
+    .hiddenLink {
+      display: none;
       font-size: 16px;
       background: #007bff;
       color: #fff;
@@ -92,7 +93,20 @@
       border-radius: 5px;
       transition: background 0.3s ease;
     }
-    .download-link:hover {
+    .hiddenLink:hover {
+      background: #0056b3;
+    }
+    .btn-prompt {
+      background: #007bff;
+      color: #fff;
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .btn-prompt:hover {
       background: #0056b3;
     }
   </style>
@@ -169,10 +183,12 @@
 
   <h3 id="modelStatus"></h3>
 
-  <!-- Download Link Section -->
+  <!-- Download Link Section with Password Prompt -->
   <div class="download-section">
-    <!-- Update 'report.pdf' with the actual path or filename of your PDF -->
-    <a class="download-link" href="report.pdf" download>
+    <button class="btn-prompt" onclick="requestPassword()">Click to Unlock PDF Report</button>
+    <br>
+    <!-- Hidden link; only visible if password is correct -->
+    <a id="downloadLink" class="hiddenLink" href="report.pdf" download>
       Download Full Report & Insights (PDF)
     </a>
   </div>
@@ -429,6 +445,17 @@
         denY += dy * dy;
       }
       return num / Math.sqrt(denX * denY);
+    }
+
+    // Password prompt for the PDF
+    function requestPassword() {
+      const pwd = prompt("Enter the password to unlock the PDF link:");
+      if (pwd && pwd === "hospital") {
+        // show link
+        document.getElementById("downloadLink").style.display = "inline-block";
+      } else {
+        alert("Incorrect password. Please try again.");
+      }
     }
 
     // Listen for file input
