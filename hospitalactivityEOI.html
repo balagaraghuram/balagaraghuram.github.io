@@ -1,247 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Activity Prediction</title>
-    <!-- Load Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        #animations {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            width: 300px;
-            border: 2px solid #007bff;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 5px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            animation: slideIn 2s ease-out;
-        }
-        #animations h3 {
-            color: #007bff;
-        }
-        @keyframes slideIn {
-            from {
-                right: -400px;
-                opacity: 0;
-            }
-            to {
-                right: 10px;
-                opacity: 1;
-            }
-        }
-        #insights {
-            margin: 20px;
-            font-size: 16px;
-        }
-        #insights h2 {
-            color: #007bff;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Weather-Driven Hospital Activity Prediction</title>
+  <!-- Plotly for plotting -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- TensorFlow.js for in-browser machine learning -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0/dist/tf.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      line-height: 1.6;
+      background: #fafafa;
+    }
+    h1, h3 {
+      text-align: center;
+      margin-top: 15px;
+      color: #333;
+    }
+    #sidebar {
+      position: fixed; top: 10px; right: 10px;
+      width: 320px; border: 2px solid #007bff;
+      padding: 10px; background: #fff; border-radius: 5px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      animation: slideIn 1.5s ease-out;
+    }
+    #sidebar h3 { color: #007bff; margin-top: 0; }
+    @keyframes slideIn {
+      from { right: -400px; opacity: 0; }
+      to   { right: 10px; opacity: 1; }
+    }
+    #upload-section {
+      text-align: center;
+      margin: 20px auto;
+      padding: 10px;
+    }
+    #upload-section input[type="file"] {
+      margin-left: 10px;
+      font-size: 14px;
+      padding: 5px;
+    }
+    #insights {
+      margin: 20px;
+      background: #fff;
+      border-radius: 5px;
+      padding: 15px;
+    }
+    #insights h2 {
+      color: #007bff;
+      margin-top: 0;
+    }
+    #plot, #prediction-plot, #correlation-plot {
+      width: 90%;
+      height: 500px;
+      margin: 10px auto;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    #analysis-summary p, #analysis-summary ul {
+      font-size: 15px;
+    }
+    .stats-box {
+      display: flex; justify-content: space-between;
+      margin-top: 10px; background: #f2f2f2;
+      padding: 10px; border-radius: 5px;
+    }
+    .stats-box div {
+      flex: 1;
+      margin: 0 5px;
+      text-align: center;
+    }
+    .stats-box b { display: block; margin-bottom: 5px; }
+    #modelStatus {
+      text-align: center; margin-top: 15px; color: #333;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-    <h1 style="text-align: center;">Advanced Weather-Driven Hospital Activity Prediction</h1>
-    <h3 style="text-align: center; color: gray;">Project by Prof. Hui Li, Department of Mathematics, University of Birmingham</h3>
+  <h1>Advanced Weather-Driven Hospital Activity Prediction</h1>
+  <h3 style="color: gray;">
+    A collaborative research work under the guidance of Prof. Hui Li, 
+    Department of Mathematics, University of Birmingham
+  </h3>
 
-    <!-- Animation Sidebar -->
-    <div id="animations">
-        <h3>Why This Project Matters</h3>
-        <ul>
-            <li>Weather conditions significantly influence hospital admissions in the UK.</li>
-            <li>Data-driven predictions improve healthcare planning during extreme weather events.</li>
-            <li>Predictive models enable the UK government to allocate resources efficiently.</li>
-            <li>Visual analysis reveals actionable insights for decision-makers.</li>
-        </ul>
-        <p style="font-size: 14px; color: gray;">"Designed and developed by balaga raghuram (for the purpose of EOI demo,)</p>
+  <!-- Sidebar with project highlights -->
+  <div id="sidebar">
+    <h3>Why This Project?</h3>
+    <ul style="font-size:14px; line-height:1.4;">
+      <li><b>Enhanced Prediction:</b> 
+        Leverages advanced ML to forecast ED & ICU admissions.</li>
+      <li><b>Complex Weather Factors:</b> 
+        Incorporates temperature & rainfall, ready for more (e.g. pollution data).</li>
+      <li><b>Resource Allocation:</b> 
+        Helps hospitals plan staff & equipment based on predicted surges.</li>
+      <li><b>Real-Time Visualization:</b> 
+        Interactive dashboards for immediate insights.</li>
+    </ul>
+    <p style="font-size: 13px; color: #777;">
+      Designed and developed by <b>Balaga Raghuram</b> (for EOI demo),
+      building upon advanced literature review concepts.
+    </p>
+  </div>
+
+  <!-- File upload section -->
+  <div id="upload-section">
+    <label for="fileUpload" style="font-size: 16px;">
+      Upload CSV File (Date, Temp, Rainfall, ED, ICU):
+    </label>
+    <input type="file" id="fileUpload" accept=".csv" />
+  </div>
+
+  <!-- Main insights container -->
+  <div id="insights">
+    <h2>Real-Time Insights & Analysis</h2>
+    <div id="analysis-summary">
+      <p>Upload your dataset to generate interactive plots, 
+      correlation analyses, and advanced predictions using multiple linear regression.</p>
     </div>
-
-    <!-- File Upload -->
-    <div style="text-align: center; margin-bottom: 20px;">
-        <label for="fileUpload" style="font-size: 18px;">Upload Your Data File (CSV Format):</label>
-        <input type="file" id="fileUpload" accept=".csv" style="margin-left: 10px;">
+    <div class="stats-box" id="statisticsBox" style="display:none;">
+      <div>
+        <b>Average Temp (°C)</b>
+        <span id="avgTemp"></span>
+      </div>
+      <div>
+        <b>Average Rainfall (mm)</b>
+        <span id="avgRainfall"></span>
+      </div>
+      <div>
+        <b>Mean ED Admissions</b>
+        <span id="avgED"></span>
+      </div>
+      <div>
+        <b>Mean ICU Admissions</b>
+        <span id="avgICU"></span>
+      </div>
     </div>
+  </div>
 
-    <!-- Real-Time Insights -->
-    <div id="insights">
-        <h2>Real-Time Insights</h2>
-        <div id="analysis-summary">
-            <p>Upload your data to see detailed analysis, predictions, and interpretations.</p>
-        </div>
-    </div>
+  <!-- Correlation Heatmap -->
+  <div id="correlation-plot"></div>
 
-    <!-- Plot -->
-    <div id="plot" style="width: 100%; height: 600px;"></div>
-    <div id="prediction-plot" style="width: 100%; height: 600px; margin-top: 20px;"></div>
+  <!-- Main scatter plot -->
+  <div id="plot"></div>
 
-    <script>
-        let dates = [];
-        let temperature = [];
-        let rainfall = [];
-        let edAdmissions = [];
-        let icuAdmissions = [];
+  <!-- ML Regression Plot -->
+  <div id="prediction-plot"></div>
 
-        function renderPlots() {
-            // Scatter plot with animated marker size and color
-            const scatterTrace = {
-                x: temperature,
-                y: edAdmissions,
-                mode: 'markers',
-                marker: {
-                    size: rainfall.map(r => Math.sqrt(r) * 5),
-                    color: icuAdmissions,
-                    colorscale: 'Viridis',
-                    colorbar: { title: 'ICU Admissions' },
-                    showscale: true
-                },
-                text: dates.map((date, i) =>
-                    `Date: ${date}<br>Temperature: ${temperature[i].toFixed(1)}°C<br>Rainfall: ${rainfall[i].toFixed(1)} mm<br>ED Admissions: ${edAdmissions[i]}<br>ICU Admissions: ${icuAdmissions[i]}`
-                ),
-                hoverinfo: 'text'
-            };
+  <h3 id="modelStatus"></h3>
 
-            const layout = {
-                title: 'Weather Influence on Hospital Activity',
-                xaxis: { title: 'Temperature (°C)' },
-                yaxis: { title: 'Emergency Department Admissions' },
-                template: 'plotly_white',
-                hovermode: 'closest',
-                updatemenus: [{
-                    buttons: [
-                        {
-                            method: 'animate',
-                            args: [null, { mode: 'immediate', frame: { redraw: true, duration: 500 } }],
-                            label: 'Play Animation'
-                        },
-                        {
-                            method: 'animate',
-                            args: [[null], { mode: 'immediate', frame: { redraw: true, duration: 0 } }],
-                            label: 'Pause Animation'
-                        }
-                    ],
-                    direction: 'left',
-                    pad: { r: 10, t: 87 },
-                    showactive: false,
-                    type: 'buttons',
-                    x: 0.1,
-                    xanchor: 'right',
-                    y: 0,
-                    yanchor: 'top'
-                }],
-                frames: []
-            };
+  <script>
+    // Data arrays
+    let dates = [],
+        temperature = [],
+        rainfall = [],
+        edAdmissions = [],
+        icuAdmissions = [];
 
-            Plotly.newPlot('plot', [scatterTrace], layout);
+    // This function processes the uploaded CSV
+    function handleFileUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const rawCSV = evt.target.result;
+          parseCSV(rawCSV);
+        };
+        reader.readAsText(file);
+      }
+    }
 
-            generatePredictions();
+    // Parse CSV data into arrays
+    function parseCSV(csvData) {
+      const rows = csvData.split('\n').map(r => r.trim()).filter(r => r);
+      // Assume the first row is header
+      rows.shift(); // remove header
+      // reset arrays to empty
+      dates = []; temperature = []; rainfall = []; edAdmissions = []; icuAdmissions = [];
+
+      rows.forEach(row => {
+        const cols = row.split(',').map(c => c.trim());
+        if (cols.length >= 5) {
+          dates.push(cols[0]);
+          temperature.push(parseFloat(cols[1]));
+          rainfall.push(parseFloat(cols[2]));
+          edAdmissions.push(parseFloat(cols[3]));
+          icuAdmissions.push(parseFloat(cols[4]));
         }
+      });
 
-        function generateInsights() {
-            const avgTemperature = (temperature.reduce((a, b) => a + b, 0) / temperature.length).toFixed(2);
-            const avgRainfall = (rainfall.reduce((a, b) => a + b, 0) / rainfall.length).toFixed(2);
-            const avgED = (edAdmissions.reduce((a, b) => a + b, 0) / edAdmissions.length).toFixed(2);
-            const avgICU = (icuAdmissions.reduce((a, b) => a + b, 0) / icuAdmissions.length).toFixed(2);
+      if (temperature.length > 0) {
+        updateInsights();
+        drawCorrelationMatrix();
+        drawScatterPlot();
+        runAdvancedML();
+      }
+    }
 
-            const insights = `
-                <h3>Detailed Analysis and Interpretation</h3>
-                <p>The uploaded data reveals critical insights into the correlation between weather patterns and hospital activity. Below is a summary:</p>
-                <ul>
-                    <li><b>Average Temperature:</b> ${avgTemperature} °C</li>
-                    <li><b>Average Rainfall:</b> ${avgRainfall} mm</li>
-                    <li><b>Average ED Admissions:</b> ${avgED}</li>
-                    <li><b>Average ICU Admissions:</b> ${avgICU}</li>
-                </ul>
-                <p>High temperatures correlate with ICU admissions due to heat-related illnesses, while high rainfall leads to a surge in ED admissions due to injuries and respiratory conditions.</p>
-                <p>The UK government can leverage these insights to allocate healthcare resources efficiently during extreme weather events, minimizing the strain on hospitals.</p>
-            `;
+    // Update summary insights
+    function updateInsights() {
+      document.getElementById('statisticsBox').style.display = 'flex';
 
-            document.getElementById('analysis-summary').innerHTML = insights;
+      const avgT = average(temperature).toFixed(2);
+      const avgR = average(rainfall).toFixed(2);
+      const avgEDval = average(edAdmissions).toFixed(2);
+      const avgICUval = average(icuAdmissions).toFixed(2);
+
+      document.getElementById('avgTemp').textContent = avgT;
+      document.getElementById('avgRainfall').textContent = avgR;
+      document.getElementById('avgED').textContent = avgEDval;
+      document.getElementById('avgICU').textContent = avgICUval;
+
+      const analysisHtml = `
+        <p>Data successfully loaded: 
+          <b>${dates.length}</b> records from <b>${dates[0]}</b> to <b>${dates[dates.length-1]}</b>.
+        </p>
+        <p>Below are average statistics. Observing these values helps identify broad patterns in how 
+        <b>temperature</b> and <b>rainfall</b> align with <b>hospital admissions</b>. 
+        Extremely high or low temperature days often see a spike in ICU usage due to heat-related or cold-related ailments, 
+        while heavy rainfall correlates with increased accidents and respiratory issues leading to higher ED volumes.</p>
+      `;
+      document.getElementById('analysis-summary').innerHTML = analysisHtml;
+    }
+
+    // Draw correlation matrix using Plotly
+    function drawCorrelationMatrix() {
+      // Create a 2D correlation matrix: [Temp, Rainfall, ED, ICU]
+      const dataMatrix = [
+        temperature, rainfall, edAdmissions, icuAdmissions
+      ];
+      const labels = ['Temp', 'Rainfall', 'ED', 'ICU'];
+
+      // Calculate correlation
+      const corrMatrix = computeCorrelationMatrix(dataMatrix);
+
+      // Prepare Plotly data for heatmap
+      const trace = {
+        z: corrMatrix,
+        x: labels,
+        y: labels,
+        type: 'heatmap',
+        colorscale: 'RdBu',
+        zmin: -1, zmax: 1
+      };
+
+      const layout = {
+        title: 'Correlation Matrix',
+        width: 700,
+        height: 500,
+        xaxis: { side: 'bottom' },
+        yaxis: { autorange: 'reversed' },
+        margin: { l: 50, r: 50, t: 50, b: 50 },
+      };
+
+      Plotly.newPlot('correlation-plot', [trace], layout);
+    }
+
+    // Main scatter plot with advanced markers
+    function drawScatterPlot() {
+      const scatterTrace = {
+        x: temperature,
+        y: edAdmissions,
+        mode: 'markers',
+        marker: {
+          size: rainfall.map(r => Math.sqrt(r) * 5),
+          color: icuAdmissions,
+          colorscale: 'YlOrRd',
+          colorbar: { title: 'ICU' },
+          showscale: true
+        },
+        text: dates.map((d, i) =>
+          `Date: ${d}<br>Temp: ${temperature[i].toFixed(2)}°C<br>Rain: ${rainfall[i].toFixed(2)} mm<br>ED: ${edAdmissions[i]}<br>ICU: ${icuAdmissions[i]}`
+        ),
+        hoverinfo: 'text'
+      };
+
+      const layout = {
+        title: 'Weather & Hospital Admissions - Interactive Scatter',
+        xaxis: { title: 'Temperature (°C)' },
+        yaxis: { title: 'ED Admissions' },
+        template: 'plotly_white',
+        hovermode: 'closest'
+      };
+
+      Plotly.newPlot('plot', [scatterTrace], layout);
+    }
+
+    // Run advanced ML with TensorFlow.js (Multiple Linear Regression: ED = a + b1*Temp + b2*Rain)
+    async function runAdvancedML() {
+      document.getElementById('modelStatus').textContent = 'Training a multi-variable regression model...';
+
+      // Prepare features and labels
+      const tempTensor = tf.tensor1d(temperature);
+      const rainTensor = tf.tensor1d(rainfall);
+      const EDtensor = tf.tensor1d(edAdmissions);
+
+      // Stack features horizontally => shape [n, 2]
+      const features = tf.stack([tempTensor, rainTensor], 1); 
+      const labels = EDtensor;
+
+      // Define model
+      const model = tf.sequential();
+      model.add(tf.layers.dense({ units: 1, inputShape: [2], activation: 'linear' }));
+
+      model.compile({ optimizer: tf.train.adam(0.01), loss: 'meanSquaredError' });
+
+      // Train model
+      await model.fit(features, labels, {
+        epochs: 50,
+        batchSize: 16,
+        shuffle: true,
+        callbacks: {
+          onEpochEnd: (epoch, logs) => {
+            document.getElementById('modelStatus').textContent =
+              `Training... Epoch: ${epoch+1} | Loss: ${logs.loss.toFixed(4)}`;
+          }
         }
+      });
 
-        function generatePredictions() {
-            const n = temperature.length;
-            const meanX = temperature.reduce((a, b) => a + b, 0) / n;
-            const meanY = edAdmissions.reduce((a, b) => a + b, 0) / n;
+      // Final
+      document.getElementById('modelStatus').textContent = 'Model training complete. Generating predictions...';
 
-            let numerator = 0, denominator = 0;
-            for (let i = 0; i < n; i++) {
-                numerator += (temperature[i] - meanX) * (edAdmissions[i] - meanY);
-                denominator += (temperature[i] - meanX) ** 2;
-            }
-            const slope = numerator / denominator;
-            const intercept = meanY - slope * meanX;
+      // Predict
+      const predictions = model.predict(features).dataSync();
 
-            const predictedED = temperature.map(t => slope * t + intercept);
+      // Plot predictions
+      drawPredictionPlot(predictions);
+    }
 
-            const predictionTrace = {
-                x: temperature,
-                y: predictedED,
-                mode: 'lines',
-                name: 'Predicted ED Admissions',
-                line: { color: 'red' }
-            };
+    function drawPredictionPlot(predictedED) {
+      // Sort by temperature for nicer line plotting
+      const combined = temperature.map((t, i) => ({
+        temp: t,
+        actualED: edAdmissions[i],
+        predictedED: predictedED[i]
+      }));
+      combined.sort((a, b) => a.temp - b.temp);
 
-            const actualTrace = {
-                x: temperature,
-                y: edAdmissions,
-                mode: 'markers',
-                name: 'Actual ED Admissions',
-                marker: { color: 'blue' }
-            };
+      const actualTrace = {
+        x: combined.map(d => d.temp),
+        y: combined.map(d => d.actualED),
+        mode: 'markers',
+        name: 'Actual ED',
+        marker: { color: 'blue' }
+      };
 
-            const layout = {
-                title: 'Prediction of ED Admissions Based on Temperature',
-                xaxis: { title: 'Temperature (°C)' },
-                yaxis: { title: 'ED Admissions' },
-                template: 'plotly_white'
-            };
+      const predictTrace = {
+        x: combined.map(d => d.temp),
+        y: combined.map(d => d.predictedED),
+        mode: 'lines+markers',
+        name: 'Predicted ED',
+        line: { color: 'red' }
+      };
 
-            Plotly.newPlot('prediction-plot', [actualTrace, predictionTrace], layout);
+      const layout = {
+        title: 'Multiple Regression: ED ~ Temp + Rain',
+        xaxis: { title: 'Temperature (°C)' },
+        yaxis: { title: 'ED Admissions' },
+        template: 'plotly_white'
+      };
+
+      Plotly.newPlot('prediction-plot', [actualTrace, predictTrace], layout);
+      document.getElementById('modelStatus').textContent = 
+        'Done! Compare actual vs. predicted ED admissions across temperature.';
+    }
+
+    // Utility: average
+    function average(arr) {
+      return arr.reduce((a, b) => a + b, 0) / arr.length;
+    }
+
+    // Utility: correlation matrix
+    function computeCorrelationMatrix(dataArrays) {
+      // dataArrays = [ [x1...], [x2...], [x3...], ... ]
+      const nVar = dataArrays.length;
+      const corrMatrix = [];
+
+      for (let i = 0; i < nVar; i++) {
+        corrMatrix[i] = [];
+        for (let j = 0; j < nVar; j++) {
+          const corrVal = pearsonCorrelation(dataArrays[i], dataArrays[j]);
+          corrMatrix[i][j] = corrVal;
         }
+      }
+      return corrMatrix;
+    }
 
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const csvData = e.target.result;
-                    processData(csvData);
-                };
-                reader.readAsText(file);
-            }
-        }
+    // Utility: Pearson correlation
+    function pearsonCorrelation(x, y) {
+      const n = x.length;
+      const meanX = average(x);
+      const meanY = average(y);
 
-        function processData(csvData) {
-            const rows = csvData.split('\n').slice(1);
-            dates = [];
-            temperature = [];
-            rainfall = [];
-            edAdmissions = [];
-            icuAdmissions = [];
+      let num = 0, denX = 0, denY = 0;
+      for (let i = 0; i < n; i++) {
+        const dx = x[i] - meanX;
+        const dy = y[i] - meanY;
+        num += dx * dy;
+        denX += dx * dx;
+        denY += dy * dy;
+      }
+      return num / Math.sqrt(denX * denY);
+    }
 
-            rows.forEach(row => {
-                const cols = row.split(',');
-                if (cols.length >= 5) {
-                    dates.push(cols[0]);
-                    temperature.push(parseFloat(cols[1]));
-                    rainfall.push(parseFloat(cols[2]));
-                    edAdmissions.push(parseInt(cols[3]));
-                    icuAdmissions.push(parseInt(cols[4]));
-                }
-            });
-
-            renderPlots();
-            generateInsights();
-        }
-
-        document.getElementById('fileUpload').addEventListener('change', handleFileUpload);
-    </script>
+    // Listen for file input
+    document.getElementById('fileUpload').addEventListener('change', handleFileUpload);
+  </script>
 </body>
 </html>
