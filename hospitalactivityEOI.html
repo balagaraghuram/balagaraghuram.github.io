@@ -78,6 +78,23 @@
       text-align: center; margin-top: 15px; color: #333;
       font-size: 16px;
     }
+    /* Download link styling */
+    .download-section {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .download-link {
+      font-size: 16px;
+      background: #007bff;
+      color: #fff;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    .download-link:hover {
+      background: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -94,7 +111,7 @@
       <li><b>Enhanced Prediction:</b> 
         Leverages advanced ML to forecast ED & ICU admissions.</li>
       <li><b>Complex Weather Factors:</b> 
-        Incorporates temperature & rainfall, ready for more (e.g. pollution data).</li>
+        Incorporates temperature & rainfall, ready for more (e.g., pollution data).</li>
       <li><b>Resource Allocation:</b> 
         Helps hospitals plan staff & equipment based on predicted surges.</li>
       <li><b>Real-Time Visualization:</b> 
@@ -151,6 +168,14 @@
   <div id="prediction-plot"></div>
 
   <h3 id="modelStatus"></h3>
+
+  <!-- Download Link Section -->
+  <div class="download-section">
+    <!-- Update 'report.pdf' with the actual path or filename of your PDF -->
+    <a class="download-link" href="report.pdf" download>
+      Download Full Report & Insights (PDF)
+    </a>
+  </div>
 
   <script>
     // Data arrays
