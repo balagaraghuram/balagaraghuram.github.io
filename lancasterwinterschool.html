@@ -47,20 +47,27 @@
             display: flex;
             gap: 10px;
             justify-content: center;
+            margin: 20px 0;
         }
         .gallery img {
             border: 2px solid #ddd;
             border-radius: 8px;
-            width: 45%;
+            width: 100%;
+            max-width: 350px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         footer {
             text-align: center;
             padding: 10px;
-            background: #003c80;
-            color: white;
+            background: #f8f8f8;
+            color: #555;
             border-radius: 0 0 8px 8px;
             margin-top: 20px;
+            font-size: 0.9em;
+        }
+        footer a {
+            color: #800080;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -76,8 +83,6 @@
         <article>
             <p>The University of Lancaster’s <strong>funded Winter School</strong> has become a hallmark for aspiring mathematicians and professionals to enhance their knowledge and skills. This transformative program blends academic depth with practical insights, making it a must-attend event for mathematics enthusiasts.</p>
 
-            <p>This year, the Winter School featured dynamic lectures, collaborative workshops, and one-on-one sessions with leading researchers and mathematicians. Participants delved into different areas of mathematics, exploring topics ranging from pure mathematical theory to practical applications in fields like data science, finance, and sustainability.</p>
-
             <h3>Highlights of the Program</h3>
             <ul>
                 <li><strong>Sessions with Top Mathematicians:</strong> Attendees met renowned professors and researchers who shared insights into groundbreaking discoveries and current trends.</li>
@@ -85,6 +90,10 @@
                 <li><strong>Collaborative Projects:</strong> Teams worked on real-world challenges, applying mathematics to solve pressing problems in technology and environmental science.</li>
                 <li><strong>Networking:</strong> Informal discussions, panel debates, and group meetups enabled participants to build lasting academic and professional connections.</li>
             </ul>
+
+            <div class="gallery">
+                <img src="winterschool1.jpg" alt="Participants in a lecture session">
+            </div>
 
             <h3>Key Learnings</h3>
             <p>The Winter School left participants with valuable takeaways, including:</p>
@@ -95,11 +104,12 @@
                 <li>A new appreciation for how mathematics can contribute to global initiatives, such as sustainable development and climate modeling.</li>
             </ul>
 
-            <h3>Photo Gallery</h3>
             <div class="gallery">
-                <img src="winterschool1.jpg" alt="Participants in a lecture session">
-                <img src="winterschool2.jpg" alt="Group project discussion">
+                <img src="winterschool2.jpg" alt="Interaction with top mathematicians and researchers in discrete mathematics">
             </div>
+
+            <h3>Discrete Mathematics and Machine Learning Applications</h3>
+            <p>Discrete mathematics is a fundamental branch of mathematics that deals with structures such as graphs, sets, and algorithms. Its principles form the backbone of computer science and machine learning. For example, graph theory is widely used in social network analysis, while combinatorics aids in feature selection and optimization in machine learning models. The Winter School provided participants with insights into how discrete mathematics is applied to solve complex problems in data science and artificial intelligence, making it an invaluable tool for future advancements.</p>
 
             <h3>Conclusion</h3>
             <p>The funded Winter School at the University of Lancaster is a testament to the power of collaboration and innovation in mathematics. By bringing together bright minds and seasoned experts, it fosters a learning environment that inspires creativity and problem-solving.</p>
@@ -110,7 +120,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Winter School at University of Lancaster. All rights reserved.</p>
+            <p>&copy; 2025 Balaga Raghuram | <a href="https://github.com/balagaraghuram" target="_blank">GitHub Profile</a></p>
         </div>
     </footer>
 </body>
