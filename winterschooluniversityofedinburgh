@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the transformative experience of the 2025 Winter School in Programming at the University of Edinburgh, Scotland.">
+    <title>Winter School in Programming | University of Edinburgh</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #e6f2ff, #ffffff);
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            background: white;
+            color: black;
+            padding: 40px 0;
+            border-radius: 8px 8px 0 0;
+            border: 2px solid #ddd;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #f8f8f8;
+            color: #555;
+            border-radius: 0 0 8px 8px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        footer a {
+            color: #800080;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Winter School in Programming</h1>
+            <h2>University of Edinburgh, Scotland</h2>
+        </div>
+    </header>
+
+    <main class="container">
+        <article>
+            <p>The <strong>Winter School in Programming 2025</strong> at the University of Edinburgh, Scotland, was an exceptional event that brought together students, developers, and tech enthusiasts from across the globe. Set against the backdrop of the historic and stunning city of Edinburgh, this program provided participants with the unique opportunity to dive deep into advanced programming techniques, cutting-edge technologies, and collaborative problem-solving.</p>
+
+            <img src="winter school university of edinburgh.jpg" alt="Winter School at University of Edinburgh">
+
+            <p>The winter school covered a diverse range of topics, including Python for data science, advanced algorithms, and artificial intelligence applications. Hands-on workshops allowed participants to apply theoretical knowledge to real-world scenarios, fostering a deeper understanding of programming concepts and their applications in various industries. Esteemed faculty members and guest lecturers shared their expertise, providing invaluable insights and mentorship throughout the program.</p>
+
+            <p>One of the highlights of the event was the collaborative coding sessions. Participants were grouped into teams to tackle complex projects, ranging from machine learning model implementations to developing innovative software solutions. This collaborative approach not only enhanced learning but also encouraged networking and teamwork, making it a truly enriching experience.</p>
+
+            <p>Beyond the technical sessions, the Winter School offered a glimpse into the vibrant cultural heritage of Scotland. Guided tours around Edinburgh, including visits to the Edinburgh Castle and Arthur's Seat, added a unique touch to the experience, ensuring a perfect balance of learning and leisure.</p>
+
+            <p>I want to extend my heartfelt thanks to the University of Edinburgh for hosting such an inspiring and impactful event. The knowledge and connections I gained during the Winter School will undoubtedly have a lasting impact on my professional journey. Thank you for providing this incredible opportunity!</p>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Balaga Raghuram | <a href="https://github.com/balagaraghuram" target="_blank">GitHub Profile</a></p>
+        </div>
+    </footer>
+</body>
+</html>
