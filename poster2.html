@@ -1,29 +1,3 @@
- <?php
-session_start();
-
-/**********************************************
- * Initialize the session storage for comments
- **********************************************/
-if (!isset($_SESSION['myLockedComment'])) {
-    $_SESSION['myLockedComment'] = null; // no comment yet
-}
-
-// Flag for whether a new comment was just submitted
-$showPoster = false;
-
-/****************************************************
- * Handle Form Submission (via POST)
- ****************************************************/
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $comment = trim($_POST['comment'] ?? '');
-    if (!empty($comment)) {
-        // Store the submitted comment in session
-        $_SESSION['myLockedComment'] = $comment;
-        // Trigger the New Year poster in the browser
-        $showPoster = true;
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,13 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /* Poster Image */
     .poster-container {
       margin-bottom: 20px;
+      text-align: center;
     }
     .poster-container img {
       max-width: 100%;
       height: auto;
       border-radius: 8px;
-      display: block;
-      margin: 0 auto;
     }
 
     /* Comments Section Styles */
@@ -74,8 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       border-radius: 5px;
       border: 1px solid #ddd;
     }
-
-    /* Comment Form */
     .comment-form {
       display: flex;
       flex-direction: column;
@@ -101,6 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       color: #fff;
       font-size: 14px;
     }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
     .note {
       font-size: 13px;
       color: #555;
@@ -113,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /* Happy New Year Poster Styles */
     #new-year-poster {
-      display: none; /* Will be displayed by JS if a new comment is submitted */
+      display: none; /* Will be shown dynamically after submit */
       margin-top: 20px;
       text-align: center;
     }
@@ -125,14 +100,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </style>
 </head>
 <body>
-
   <!-- Page Title -->
   <h1>view the poster and share your comments!</h1>
 
   <!-- Poster Image Below the Title -->
   <div class="poster-container">
     <img 
-      src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/poster.png?raw=true" 
+      src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/poster.png?raw=true"
       alt="Poster Image"
     />
   </div>
@@ -140,35 +114,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Accessible Comments Section -->
   <div class="comments-section">
     <h2>Accessible Comments</h2>
-    
-    <!-- Display the comment if it exists -->
-    <ul class="comments-list">
-      <?php if ($_SESSION['myLockedComment'] !== null): ?>
-        <li><?= htmlspecialchars($_SESSION['myLockedComment']) ?></li>
-      <?php else: ?>
-        <li style="background: #fff; border: none; margin: 10px;">
-          No comments yet.
-        </li>
-      <?php endif; ?>
+    <ul id="comments-list" class="comments-list">
+      <!-- The user's locked comment (if any) will appear here -->
     </ul>
 
     <!-- Comment Form -->
-    <?php if ($_SESSION['myLockedComment'] === null): ?>
-      <!-- Show the form only if there's no locked comment -->
-      <form method="POST" class="comment-form">
-        <textarea name="comment" placeholder="Enter your comment..."></textarea>
-        <button type="submit">Submit Comment</button>
-      </form>
-    <?php else: ?>
-      <!-- Once a comment is entered, form is locked (hidden) -->
-      <p><em>Your comment is now locked.</em></p>
-    <?php endif; ?>
+    <div id="comment-form" class="comment-form">
+      <textarea id="comment-input" placeholder="Enter your comment..."></textarea>
+      <button id="submit-btn">Submit Comment</button>
+    </div>
 
+    <!-- Note on Accessibility -->
     <div class="note">
       The comments will be converted in the accessible format for visually challenged as per W3C guidelines
     </div>
 
-    <!-- Confirmation Message (hidden by default, shown via JS) -->
+    <!-- Confirmation Message (hidden initially) -->
     <div id="confirmation" class="confirmation" style="display:none;">
       Thank you for the comments and Happy New Year 2025
     </div>
@@ -177,26 +138,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Happy New Year Poster (displayed on submit for 1 minute) -->
   <div id="new-year-poster">
     <img 
-      src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/happy%20new%20year1.png?raw=true" 
+      src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/happy%20new%20year1.png?raw=true"
       alt="Happy New Year 2025 Poster"
     />
   </div>
 
   <script>
-    // We use a PHP variable to tell JS if a new comment was submitted
-    var showPoster = <?php echo ($showPoster ? 'true' : 'false'); ?>;
+    const commentList = document.getElementById('comments-list');
+    const commentForm = document.getElementById('comment-form');
+    const commentInput = document.getElementById('comment-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const confirmation = document.getElementById('confirmation');
+    const newYearPoster = document.getElementById('new-year-poster');
 
-    if (showPoster) {
-      // 1) Display confirmation message
-      document.getElementById('confirmation').style.display = 'block';
-      // 2) Display the New Year poster for 1 minute
-      var newYearPoster = document.getElementById('new-year-poster');
-      newYearPoster.style.display = 'block';
-      setTimeout(function() {
-        newYearPoster.style.display = 'none';
-      }, 60000); // 1 minute = 60,000 ms
+    // Check localStorage for any existing locked comment
+    const existingComment = localStorage.getItem('myLockedComment');
+
+    // If there's an existing comment, display it and lock the form
+    if (existingComment) {
+      displayComment(existingComment);
+      lockCommentForm();
+    }
+
+    // Handle the Submit button click
+    submitBtn.addEventListener('click', () => {
+      const comment = commentInput.value.trim();
+      if (comment) {
+        // Save to localStorage
+        localStorage.setItem('myLockedComment', comment);
+
+        // Display the comment
+        displayComment(comment);
+
+        // Lock the form
+        lockCommentForm();
+
+        // Show confirmation message
+        confirmation.style.display = 'block';
+
+        // Display the New Year poster for 1 minute
+        newYearPoster.style.display = 'block';
+        setTimeout(() => {
+          newYearPoster.style.display = 'none';
+        }, 60000); // 1 minute = 60,000 ms
+      }
+    });
+
+    // Functions
+    function displayComment(comment) {
+      // Clear current list (if any)
+      commentList.innerHTML = '';
+      // Create new list item and append
+      const li = document.createElement('li');
+      li.textContent = comment;
+      commentList.appendChild(li);
+    }
+
+    function lockCommentForm() {
+      // Hide the comment form so user cannot change the comment
+      commentForm.style.display = 'none';
     }
   </script>
-
 </body>
 </html>
