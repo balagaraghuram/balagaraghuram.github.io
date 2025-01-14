@@ -26,7 +26,7 @@
       border-radius: 8px;
     }
 
-    /* Comments Section Styles */
+    /* Comments Section */
     .comments-section {
       margin-top: 20px;
       max-width: 600px;
@@ -48,6 +48,8 @@
       border-radius: 5px;
       border: 1px solid #ddd;
     }
+
+    /* Comment Form */
     .comment-form {
       display: flex;
       flex-direction: column;
@@ -89,9 +91,9 @@
       color: green;
     }
 
-    /* Happy New Year Poster Styles */
+    /* Happy New Year Poster */
     #new-year-poster {
-      display: none; /* Will be shown dynamically after submit */
+      display: none; /* Shown dynamically after submit */
       margin-top: 20px;
       text-align: center;
     }
@@ -126,10 +128,10 @@
   <div class="comments-section">
     <h2>Accessible Comments</h2>
     <ul id="comments-list" class="comments-list">
-      <!-- The user's locked comment (if any) will appear here -->
+      <!-- User's locked comment (if any) will appear here -->
     </ul>
 
-    <!-- Comment Form -->
+    <!-- Comment Form is always visible initially -->
     <div id="comment-form" class="comment-form">
       <textarea id="comment-input" placeholder="Enter your comment..."></textarea>
       <button id="submit-btn">Submit Comment</button>
@@ -168,23 +170,23 @@
     const newYearPoster = document.getElementById('new-year-poster');
     const clearBtn = document.getElementById('clear-btn');
 
-    // Check localStorage for any existing locked comment
-    const existingComment = localStorage.getItem('myLockedComment');
+    // Check localStorage for any existing comment
+    const storedComment = localStorage.getItem('myLockedComment');
 
-    // If there's an existing comment, display it and lock the form
-    if (existingComment) {
-      displayComment(existingComment);
-      lockCommentForm();
+    // If an old comment is found, display it but keep the form open (unlocked).
+    // This way you can re-submit a new comment if desired, or clear if you wish.
+    if (storedComment) {
+      displayComment(storedComment);
     }
 
-    // Handle the Submit button click
+    // On submit, lock the comment
     submitBtn.addEventListener('click', () => {
       const comment = commentInput.value.trim();
       if (comment) {
         // Save to localStorage
         localStorage.setItem('myLockedComment', comment);
 
-        // Display the comment
+        // Display the new comment
         displayComment(comment);
 
         // Lock the form
@@ -197,30 +199,36 @@
         newYearPoster.style.display = 'block';
         setTimeout(() => {
           newYearPoster.style.display = 'none';
-        }, 60000); // 1 minute = 60,000 ms
+        }, 60000); // 1 minute
       }
     });
 
-    // Handle the Clear Comment button
+    // Clear the comment on click
     clearBtn.addEventListener('click', () => {
-      // Remove comment from localStorage
       localStorage.removeItem('myLockedComment');
-      // Refresh the page so user can enter a new comment
-      location.reload();
+      // Clear the display
+      commentList.innerHTML = '';
+      // Show the form again
+      commentForm.style.display = 'flex';
+      // Clear the textarea
+      commentInput.value = '';
+      // Hide confirmation and new year poster (if displayed)
+      confirmation.style.display = 'none';
+      newYearPoster.style.display = 'none';
     });
 
-    // Functions
+    // Helper function: display the given comment
     function displayComment(comment) {
-      // Clear current list (if any)
+      // Clear the list
       commentList.innerHTML = '';
-      // Create new list item and append
+      // Create a list item
       const li = document.createElement('li');
       li.textContent = comment;
       commentList.appendChild(li);
     }
 
+    // Helper function: lock the comment form
     function lockCommentForm() {
-      // Hide the comment form so user cannot change the comment
       commentForm.style.display = 'none';
     }
   </script>
