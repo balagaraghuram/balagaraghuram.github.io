@@ -1,3 +1,29 @@
+<?php
+session_start();
+
+/**********************************************
+ * Initialize the session storage for comments
+ **********************************************/
+if (!isset($_SESSION['comments'])) {
+    $_SESSION['comments'] = [];
+}
+
+// This flag will be used to trigger the “New Year Poster” display in JavaScript.
+$showPoster = false;
+
+/****************************************************
+ * Handle Form Submission (via POST)
+ ****************************************************/
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $comment = trim($_POST['comment'] ?? '');
+    if (!empty($comment)) {
+        // Store comment in session
+        $_SESSION['comments'][] = $comment;
+        // Set flag so JS shows the poster for 1 minute
+        $showPoster = true;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +47,7 @@
     .poster-container embed {
       display: block;
       width: 100%;
-      height: 500px; /* Adjust to make the PDF reader smaller or bigger */
+      height: 500px; /* Adjust this height for a smaller/bigger PDF view */
       border: none;
       border-radius: 8px;
     }
@@ -53,7 +79,9 @@
       border-radius: 5px;
       border: 1px solid #ddd;
     }
-    .comment-input-container {
+
+    /* Comment Form */
+    .comment-form {
       display: flex;
       flex-direction: column;
       margin-bottom: 10px;
@@ -66,11 +94,11 @@
       border: 1px solid #ddd;
       resize: none;
       font-size: 14px;
+      margin-bottom: 10px;
     }
     button {
       width: 120px;
       padding: 8px;
-      margin-top: 10px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -94,7 +122,7 @@
 
     /* Happy New Year Poster Styles */
     #new-year-poster {
-      display: none;
+      display: none; /* Will be displayed dynamically with JS */
       margin-top: 20px;
       text-align: center;
     }
@@ -109,7 +137,7 @@
   <!-- Page Title -->
   <h1>view the poster and share your comments!</h1>
 
-  <!-- Poster (PDF) Below the Title, smaller height -->
+  <!-- Poster (PDF) Below the Title -->
   <div class="poster-container">
     <embed 
       src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf?raw=true" 
@@ -127,14 +155,28 @@
   <!-- Accessible Comments Section -->
   <div class="comments-section">
     <h2>Accessible Comments</h2>
-    <ul id="comments-list" class="comments-list">
-      <!-- Persisted Comment Will Be Displayed Here -->
+    
+    <!-- Display existing comments -->
+    <ul class="comments-list">
+      <?php if (!empty($_SESSION['comments'])): ?>
+        <?php foreach ($_SESSION['comments'] as $cmt): ?>
+          <li><?= htmlspecialchars($cmt) ?></li>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <li style="background: #fff; border: none; margin: 10px;">
+          No comments yet.
+        </li>
+      <?php endif; ?>
     </ul>
 
-    <div id="input-container" class="comment-input-container">
-      <textarea id="comment-input" placeholder="Enter your comment..."></textarea>
-      <button id="submit-btn" onclick="submitComment()">Submit Comment</button>
-    </div>
+    <!-- Comment Form -->
+    <!-- For testing, the form is always enabled. 
+         To disable after first comment, 
+         you can check if comments already exist and hide/disable accordingly. -->
+    <form method="POST" class="comment-form">
+      <textarea name="comment" placeholder="Enter your comment..."></textarea>
+      <button type="submit">Submit Comment</button>
+    </form>
 
     <div class="note">
       The comments will be converted in the accessible format for visually challenged as per W3C guidelines
@@ -150,61 +192,23 @@
   <div id="new-year-poster">
     <img 
       src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/happy%20new%20year1.png?raw=true" 
-      alt="Happy New Year 2025 Poster" 
+      alt="Happy New Year 2025 Poster"
     />
   </div>
 
   <script>
-    const commentInput = document.getElementById('comment-input');
-    const submitBtn = document.getElementById('submit-btn');
-    const commentsList = document.getElementById('comments-list');
-    const inputContainer = document.getElementById('input-container');
-    const confirmationMsg = document.getElementById('confirmation');
-    const newYearPoster = document.getElementById('new-year-poster');
+    // In PHP, we set $showPoster = true if a new comment was just submitted.
+    var showPoster = <?php echo ($showPoster ? 'true' : 'false'); ?>;
 
-    // Check for existing comment in localStorage
-    const storedComment = localStorage.getItem('myAccessibleComment');
-
-    // If a comment is found in localStorage, display it and disable further input
-    if (storedComment) {
-      addCommentToList(storedComment);
-      disableCommentSection();
-    }
-
-    // Function to add comment to the list on the page
-    function addCommentToList(commentText) {
-      const li = document.createElement('li');
-      li.textContent = commentText;
-      commentsList.appendChild(li);
-    }
-
-    // Function to disable the comment input and button
-    function disableCommentSection() {
-      inputContainer.style.display = 'none';
-    }
-
-    // Submit comment function
-    function submitComment() {
-      const commentValue = commentInput.value.trim();
-      if (commentValue.length > 0) {
-        // 1) Save comment to localStorage
-        localStorage.setItem('myAccessibleComment', commentValue);
-
-        // 2) Display the comment
-        addCommentToList(commentValue);
-
-        // 3) Disable further input
-        disableCommentSection();
-
-        // 4) Show confirmation message
-        confirmationMsg.style.display = 'block';
-
-        // 5) Display the New Year poster for 1 minute (60,000 ms)
-        newYearPoster.style.display = 'block';
-        setTimeout(() => {
-          newYearPoster.style.display = 'none';
-        }, 60000);
-      }
+    if (showPoster) {
+      // 1) Display confirmation message
+      document.getElementById('confirmation').style.display = 'block';
+      // 2) Display the poster for 1 minute
+      var newYearPoster = document.getElementById('new-year-poster');
+      newYearPoster.style.display = 'block';
+      setTimeout(function() {
+        newYearPoster.style.display = 'none';
+      }, 60000); // 1 minute = 60,000 ms
     }
   </script>
 </body>
