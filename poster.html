@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poster Viewer with Comments</title>
+    <title>View the Poster Here and Suggest Your Comment!</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -84,6 +84,11 @@
             background: #0056b3;
         }
 
+        .comment-form button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
         .short-note {
             margin-top: 10px;
             font-size: 12px;
@@ -112,7 +117,7 @@
 <body>
     <div class="container">
         <div class="poster">
-            <h1>Poster Viewer</h1>
+            <h1>View the Poster Here and Suggest Your Comment!</h1>
             <embed src="https://raw.githubusercontent.com/balagaraghuram/balagaraghuram.github.io/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf" type="application/pdf">
         </div>
 
@@ -124,7 +129,7 @@
 
             <div class="comment-form">
                 <textarea id="comment-input" placeholder="Enter your comment..."></textarea>
-                <button title="Submit Comment" onclick="addComment()">Submit Comment</button>
+                <button id="submit-button" title="Submit Comment" onclick="addComment()">Submit Comment</button>
                 <div class="short-note">
                     Submitted comment will be converted into an accessible comment for visually challenged as per W3C standards.
                 </div>
@@ -135,7 +140,7 @@
         </div>
 
         <div id="new-year-poster" class="new-year-poster">
-            <img src="https://raw.githubusercontent.com/balagaraghuram/balagaraghuram.github.io/main/new%20year%20poster.png" alt="Happy New Year Poster">
+            <img src="https://raw.githubusercontent.com/balagaraghuram/balagaraghuram.github.io/main/happy%20new%20year1.png" alt="Happy New Year Poster">
         </div>
     </div>
 
@@ -145,6 +150,7 @@
             const commentsList = document.getElementById('comments');
             const thankYouMessage = document.getElementById('thank-you-message');
             const newYearPoster = document.getElementById('new-year-poster');
+            const submitButton = document.getElementById('submit-button');
 
             if (commentInput.value.trim() !== '') {
                 // Add comment to the list
@@ -154,6 +160,9 @@
 
                 // Clear the input field
                 commentInput.value = '';
+
+                // Disable the submit button
+                submitButton.disabled = true;
 
                 // Show thank-you message
                 thankYouMessage.style.display = 'block';
