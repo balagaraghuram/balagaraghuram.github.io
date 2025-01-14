@@ -3,6 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Poster</title>
+  <style>
+    /* Ensure the document takes up the full viewport without extra spacing */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    /* Embed the PDF to fill the entire viewport */
+    embed {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    /* Styling for the fallback message */
+    .fallback-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f4f4f9;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <embed 
+    src="https://raw.githubusercontent.com/balagaraghuram/balagaraghuram.github.io/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf" 
+    type="application/pdf" 
+    onerror="document.getElementById('fallback').style.display='block'">
+  
+  <div id="fallback" class="fallback-message" style="display:none;">
+    <p>Your browser does not support displaying PDFs.</p>
+    <p>
+      <a href="https://raw.githubusercontent.com/balagaraghuram/balagaraghuram.github.io/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf" target="_blank">
+        Click here to download the poster.
+      </a>
+    </p>
+  </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>View the Poster Here and Suggest Your Comment!</title>
   <style>
     body {
