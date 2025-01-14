@@ -14,16 +14,24 @@
     h1 {
       margin-bottom: 20px;
     }
-    /* PDF Poster Styles */
+    /* PDF Poster Styles (smaller viewer) */
     .poster-container {
       margin-bottom: 20px;
     }
-    embed {
+    .poster-container embed {
+      display: block;
       width: 100%;
-      height: 600px;
+      height: 500px; /* Adjust to make the PDF reader smaller or bigger */
       border: none;
       border-radius: 8px;
     }
+    #pdf-fallback {
+      display: none;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Comments Section Styles */
     .comments-section {
       margin-top: 20px;
       max-width: 600px;
@@ -83,7 +91,8 @@
       font-weight: bold;
       color: green;
     }
-    /* New Year Poster Styles */
+
+    /* Happy New Year Poster Styles */
     #new-year-poster {
       display: none;
       margin-top: 20px;
@@ -100,14 +109,14 @@
   <!-- Page Title -->
   <h1>view the poster and share your comments!</h1>
 
-  <!-- Poster (PDF) Below the Title -->
+  <!-- Poster (PDF) Below the Title, smaller height -->
   <div class="poster-container">
     <embed 
       src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf?raw=true" 
       type="application/pdf"
       onerror="document.getElementById('pdf-fallback').style.display='block'">
     <!-- Fallback if PDF doesn't load -->
-    <p id="pdf-fallback" style="display:none; text-align:center; margin-top:10px;">
+    <p id="pdf-fallback">
       Your browser does not support displaying PDFs. 
       <a href="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf?raw=true" target="_blank">
         Click here to download the poster.
@@ -190,7 +199,7 @@
         // 4) Show confirmation message
         confirmationMsg.style.display = 'block';
 
-        // 5) Display the New Year poster for 1 minute
+        // 5) Display the New Year poster for 1 minute (60,000 ms)
         newYearPoster.style.display = 'block';
         setTimeout(() => {
           newYearPoster.style.display = 'none';
