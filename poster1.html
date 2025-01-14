@@ -26,11 +26,18 @@
             margin-bottom: 20px;
         }
 
-        .poster iframe {
+        .poster object {
             width: 100%;
             height: 600px;
             border: none;
             border-radius: 8px;
+        }
+
+        .fallback-message {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
         }
 
         .comments-section {
@@ -120,7 +127,12 @@
     <div class="container">
         <div class="poster">
             <h1>View the Poster Here and Suggest Your Comment!</h1>
-            <iframe src="https://raw.githubusercontent.com/balagaraghuram/balagaraghuram.github.io/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf" allowfullscreen></iframe>
+            <object data="https://raw.githubusercontent.com/balagaraghuram/balagaraghuram.github.io/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf" type="application/pdf">
+                <p class="fallback-message">
+                    Your browser does not support displaying PDFs. 
+                    <a href="https://raw.githubusercontent.com/balagaraghuram/balagaraghuram.github.io/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf" target="_blank">Click here to download the poster.</a>
+                </p>
+            </object>
         </div>
 
         <div class="comments-section">
