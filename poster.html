@@ -143,7 +143,7 @@
             const newYearPoster = document.getElementById('new-year-poster');
 
             if (commentInput.value.trim() !== '') {
-                // Create a new comment element
+                // Add comment to the list
                 const newComment = document.createElement('li');
                 newComment.textContent = commentInput.value;
                 commentsList.appendChild(newComment);
@@ -151,7 +151,7 @@
                 // Clear the input field
                 commentInput.value = '';
 
-                // Show the thank-you message
+                // Show thank-you message
                 thankYouMessage.style.display = 'block';
 
                 // Show the Happy New Year poster
@@ -162,7 +162,7 @@
                     thankYouMessage.style.display = 'none';
                 }, 3000);
 
-                // Hide the Happy New Year poster after 3 minutes (180000 ms)
+                // Hide the Happy New Year poster after 3 minutes
                 setTimeout(() => {
                     newYearPoster.style.display = 'none';
                 }, 180000);
