@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poster Viewer with Comments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .poster {
+            text-align: center;
+        }
+
+        .poster img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comments-section h2 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .comments {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comments li {
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .comment-form {
+            margin-top: 20px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .comment-form button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .comment-form button:hover {
+            background: #0056b3;
+        }
+
+        .thank-you-message {
+            margin-top: 10px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="poster">
+            <h1>Poster Viewer</h1>
+            <embed src="hospital admission and weather activity dashboard.pdf" type="application/pdf" width="100%" height="600px">
+        </div>
+
+        <div class="comments-section">
+            <h2>Comments</h2>
+            <ul id="comments" class="comments">
+                <!-- Comments will appear here -->
+            </ul>
+
+            <div class="comment-form">
+                <textarea id="comment-input" placeholder="Enter your comment..."></textarea>
+                <button onclick="addComment()">Submit Comment</button>
+                <div id="thank-you-message" class="thank-you-message" style="display: none;">
+                    Thank you for the comment, Happy New Year!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addComment() {
+            const commentInput = document.getElementById('comment-input');
+            const commentsList = document.getElementById('comments');
+            const thankYouMessage = document.getElementById('thank-you-message');
+
+            if (commentInput.value.trim() !== '') {
+                // Create a new comment element
+                const newComment = document.createElement('li');
+                newComment.textContent = commentInput.value;
+                commentsList.appendChild(newComment);
+
+                // Clear the input field
+                commentInput.value = '';
+
+                // Show the thank-you message
+                thankYouMessage.style.display = 'block';
+
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                    thankYouMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
