@@ -1,14 +1,14 @@
-<?php
+ <?php
 session_start();
 
 /**********************************************
  * Initialize the session storage for comments
  **********************************************/
-if (!isset($_SESSION['comments'])) {
-    $_SESSION['comments'] = [];
+if (!isset($_SESSION['myLockedComment'])) {
+    $_SESSION['myLockedComment'] = null; // no comment yet
 }
 
-// This flag will be used to trigger the “New Year Poster” display in JavaScript.
+// Flag for whether a new comment was just submitted
 $showPoster = false;
 
 /****************************************************
@@ -17,9 +17,9 @@ $showPoster = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $comment = trim($_POST['comment'] ?? '');
     if (!empty($comment)) {
-        // Store comment in session
-        $_SESSION['comments'][] = $comment;
-        // Set flag so JS shows the poster for 1 minute
+        // Store the submitted comment in session
+        $_SESSION['myLockedComment'] = $comment;
+        // Trigger the New Year poster in the browser
         $showPoster = true;
     }
 }
@@ -40,21 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     h1 {
       margin-bottom: 20px;
     }
-    /* PDF Poster Styles (smaller viewer) */
+    /* Poster Image */
     .poster-container {
       margin-bottom: 20px;
     }
-    .poster-container embed {
-      display: block;
-      width: 100%;
-      height: 500px; /* Adjust this height for a smaller/bigger PDF view */
-      border: none;
+    .poster-container img {
+      max-width: 100%;
+      height: auto;
       border-radius: 8px;
-    }
-    #pdf-fallback {
-      display: none;
-      text-align: center;
-      margin-top: 10px;
+      display: block;
+      margin: 0 auto;
     }
 
     /* Comments Section Styles */
@@ -106,10 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       color: #fff;
       font-size: 14px;
     }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
     .note {
       font-size: 13px;
       color: #555;
@@ -122,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /* Happy New Year Poster Styles */
     #new-year-poster {
-      display: none; /* Will be displayed dynamically with JS */
+      display: none; /* Will be displayed by JS if a new comment is submitted */
       margin-top: 20px;
       text-align: center;
     }
@@ -134,34 +125,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </style>
 </head>
 <body>
+
   <!-- Page Title -->
   <h1>view the poster and share your comments!</h1>
 
-  <!-- Poster (PDF) Below the Title -->
+  <!-- Poster Image Below the Title -->
   <div class="poster-container">
-    <embed 
-      src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf?raw=true" 
-      type="application/pdf"
-      onerror="document.getElementById('pdf-fallback').style.display='block'">
-    <!-- Fallback if PDF doesn't load -->
-    <p id="pdf-fallback">
-      Your browser does not support displaying PDFs. 
-      <a href="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf?raw=true" target="_blank">
-        Click here to download the poster.
-      </a>
-    </p>
+    <img 
+      src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/poster.png?raw=true" 
+      alt="Poster Image"
+    />
   </div>
 
   <!-- Accessible Comments Section -->
   <div class="comments-section">
     <h2>Accessible Comments</h2>
     
-    <!-- Display existing comments -->
+    <!-- Display the comment if it exists -->
     <ul class="comments-list">
-      <?php if (!empty($_SESSION['comments'])): ?>
-        <?php foreach ($_SESSION['comments'] as $cmt): ?>
-          <li><?= htmlspecialchars($cmt) ?></li>
-        <?php endforeach; ?>
+      <?php if ($_SESSION['myLockedComment'] !== null): ?>
+        <li><?= htmlspecialchars($_SESSION['myLockedComment']) ?></li>
       <?php else: ?>
         <li style="background: #fff; border: none; margin: 10px;">
           No comments yet.
@@ -170,19 +153,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </ul>
 
     <!-- Comment Form -->
-    <!-- For testing, the form is always enabled. 
-         To disable after first comment, 
-         you can check if comments already exist and hide/disable accordingly. -->
-    <form method="POST" class="comment-form">
-      <textarea name="comment" placeholder="Enter your comment..."></textarea>
-      <button type="submit">Submit Comment</button>
-    </form>
+    <?php if ($_SESSION['myLockedComment'] === null): ?>
+      <!-- Show the form only if there's no locked comment -->
+      <form method="POST" class="comment-form">
+        <textarea name="comment" placeholder="Enter your comment..."></textarea>
+        <button type="submit">Submit Comment</button>
+      </form>
+    <?php else: ?>
+      <!-- Once a comment is entered, form is locked (hidden) -->
+      <p><em>Your comment is now locked.</em></p>
+    <?php endif; ?>
 
     <div class="note">
       The comments will be converted in the accessible format for visually challenged as per W3C guidelines
     </div>
 
-    <!-- Confirmation Message -->
+    <!-- Confirmation Message (hidden by default, shown via JS) -->
     <div id="confirmation" class="confirmation" style="display:none;">
       Thank you for the comments and Happy New Year 2025
     </div>
@@ -197,13 +183,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 
   <script>
-    // In PHP, we set $showPoster = true if a new comment was just submitted.
+    // We use a PHP variable to tell JS if a new comment was submitted
     var showPoster = <?php echo ($showPoster ? 'true' : 'false'); ?>;
 
     if (showPoster) {
       // 1) Display confirmation message
       document.getElementById('confirmation').style.display = 'block';
-      // 2) Display the poster for 1 minute
+      // 2) Display the New Year poster for 1 minute
       var newYearPoster = document.getElementById('new-year-poster');
       newYearPoster.style.display = 'block';
       setTimeout(function() {
@@ -211,5 +197,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }, 60000); // 1 minute = 60,000 ms
     }
   </script>
+
 </body>
 </html>
