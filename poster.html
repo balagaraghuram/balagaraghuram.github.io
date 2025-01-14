@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>view the poster and share your comments!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f9;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    /* PDF Poster Styles */
+    .poster-container {
+      margin-bottom: 20px;
+    }
+    embed {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 8px;
+    }
+    .comments-section {
+      margin-top: 20px;
+      max-width: 600px;
+    }
+    .comments-section h2 {
+      margin-bottom: 10px;
+    }
+    .comments-list {
+      list-style: none;
+      padding: 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .comments-list li {
+      background: #f9f9f9;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    .comment-input-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      resize: none;
+      font-size: 14px;
+    }
+    button {
+      width: 120px;
+      padding: 8px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #007bff;
+      color: #fff;
+      font-size: 14px;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .note {
+      font-size: 13px;
+      color: #555;
+    }
+    .confirmation {
+      margin-top: 15px;
+      font-weight: bold;
+      color: green;
+    }
+    /* New Year Poster Styles */
+    #new-year-poster {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+    #new-year-poster img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Page Title -->
+  <h1>view the poster and share your comments!</h1>
+
+  <!-- Poster (PDF) Below the Title -->
+  <div class="poster-container">
+    <embed 
+      src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf?raw=true" 
+      type="application/pdf"
+      onerror="document.getElementById('pdf-fallback').style.display='block'">
+    <!-- Fallback if PDF doesn't load -->
+    <p id="pdf-fallback" style="display:none; text-align:center; margin-top:10px;">
+      Your browser does not support displaying PDFs. 
+      <a href="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/hospital%20admission%20and%20weather%20activity%20dashboard.pdf?raw=true" target="_blank">
+        Click here to download the poster.
+      </a>
+    </p>
+  </div>
+
+  <!-- Accessible Comments Section -->
+  <div class="comments-section">
+    <h2>Accessible Comments</h2>
+    <ul id="comments-list" class="comments-list">
+      <!-- Persisted Comment Will Be Displayed Here -->
+    </ul>
+
+    <div id="input-container" class="comment-input-container">
+      <textarea id="comment-input" placeholder="Enter your comment..."></textarea>
+      <button id="submit-btn" onclick="submitComment()">Submit Comment</button>
+    </div>
+
+    <div class="note">
+      The comments will be converted in the accessible format for visually challenged as per W3C guidelines
+    </div>
+
+    <!-- Confirmation Message -->
+    <div id="confirmation" class="confirmation" style="display:none;">
+      Thank you for the comments and Happy New Year 2025
+    </div>
+  </div>
+
+  <!-- Happy New Year Poster (displayed on submit for 1 minute) -->
+  <div id="new-year-poster">
+    <img 
+      src="https://github.com/balagaraghuram/balagaraghuram.github.io/blob/main/happy%20new%20year1.png?raw=true" 
+      alt="Happy New Year 2025 Poster" 
+    />
+  </div>
+
+  <script>
+    const commentInput = document.getElementById('comment-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const commentsList = document.getElementById('comments-list');
+    const inputContainer = document.getElementById('input-container');
+    const confirmationMsg = document.getElementById('confirmation');
+    const newYearPoster = document.getElementById('new-year-poster');
+
+    // Check for existing comment in localStorage
+    const storedComment = localStorage.getItem('myAccessibleComment');
+
+    // If a comment is found in localStorage, display it and disable further input
+    if (storedComment) {
+      addCommentToList(storedComment);
+      disableCommentSection();
+    }
+
+    // Function to add comment to the list on the page
+    function addCommentToList(commentText) {
+      const li = document.createElement('li');
+      li.textContent = commentText;
+      commentsList.appendChild(li);
+    }
+
+    // Function to disable the comment input and button
+    function disableCommentSection() {
+      inputContainer.style.display = 'none';
+    }
+
+    // Submit comment function
+    function submitComment() {
+      const commentValue = commentInput.value.trim();
+      if (commentValue.length > 0) {
+        // 1) Save comment to localStorage
+        localStorage.setItem('myAccessibleComment', commentValue);
+
+        // 2) Display the comment
+        addCommentToList(commentValue);
+
+        // 3) Disable further input
+        disableCommentSection();
+
+        // 4) Show confirmation message
+        confirmationMsg.style.display = 'block';
+
+        // 5) Display the New Year poster for 1 minute
+        newYearPoster.style.display = 'block';
+        setTimeout(() => {
+          newYearPoster.style.display = 'none';
+        }, 60000);
+      }
+    }
+  </script>
+</body>
+</html>
