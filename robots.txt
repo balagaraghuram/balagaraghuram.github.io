@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://balagaraghuram.github.io/sitemap.xml
