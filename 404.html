@@ -1,16 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Redirecting...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <p>Redirecting to new site...</p>
-  
-  <script>
-    // Preserve the full path and redirect to new domain
-    var newUrl = "https://balagaraghuram1.github.io" + window.location.pathname + window.location.search + window.location.hash;
-    window.location.replace(newUrl);
-  </script>
+<body class="scanlines">
+    <div class="grain-overlay"></div>
+    
+    <div class="container">
+        <header class="site-header">
+            <h1 class="site-title">404</h1>
+            <p class="site-subtitle">Page not found</p>
+        </header>
+
+        <section class="hero-section section">
+            <h2 class="hero-title">Oops! Something went wrong.</h2>
+            <p class="hero-description">
+                The page you're looking for doesn't exist or has been moved.
+            </p>
+            <p style="margin-top: var(--space-lg);">
+                <a href="index.html" class="btn">← Back to Home</a>
+            </p>
+        </section>
+
+        <footer class="site-footer">
+            <span class="footer-text">© 2026 Balaga Raghuram</span>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="https://github.com/balagaraghuram1" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://uk.linkedin.com/in/balagaraghuram" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
