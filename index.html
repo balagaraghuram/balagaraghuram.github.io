@@ -19,7 +19,7 @@
     <div class="container">
         <!-- Header -->
         <header class="site-header">
-            <h1 class="site-title"><span class="typing-text">balaga raghuram</span><span class="typing-cursor">|</span></h1>
+            <h1 class="site-title"><span id="typing-text"></span><span class="typing-cursor">|</span></h1>
             <p class="site-subtitle">AI/ML Researcher · Academic Conferences & Funded Winter Schools<br>Cambridge · Oxford · Edinburgh · Lancaster</p>
         </header>
 
@@ -181,6 +181,18 @@
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
+        const text = "balaga raghuram";
+        const el = document.getElementById('typing-text');
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                el.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 120);
+            }
+        }
+        typeWriter();
     </script>
 </body>
 </html>
