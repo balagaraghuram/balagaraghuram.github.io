@@ -170,6 +170,27 @@ strong {
     transform-origin: left;
 }
 
+.typing-text {
+    display: inline;
+    animation: typing 2.5s steps(15) forwards;
+}
+
+@keyframes typing {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+}
+
+.typing-cursor {
+    animation: blink 0.8s step-end infinite;
+    font-weight: 200;
+    color: var(--text-primary);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
 .site-subtitle {
     font-size: 0.9rem;
     color: var(--text-muted);
