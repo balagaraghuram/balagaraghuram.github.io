@@ -160,4 +160,10 @@
       <image:title>Balaga Raghuram at University of Birmingham Museum Gallery</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://balagaraghuram.github.io/balaga-raghuram-data-scientist-nhs-oncology-risk-model.html</loc>
+    <lastmod>2026-06-18T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
