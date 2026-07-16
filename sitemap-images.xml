@@ -1,151 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-                            http://www.sitemaps.org/schemas/sitemap-image/1.1/sitemap-image.xsd">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-canary-wharf-london.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-canary-wharf.jpg</image:loc>
-      <image:title>Balaga Raghuram at Canary Wharf London Docklands</image:title>
-      <image:caption>Balaga Raghuram at Canary Wharf financial district London UK</image:caption>
+      <image:title>Balaga Raghuram at Canary Wharf London</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-university-of-birmingham-three-seasons.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-university-of-birmingham-three-seasons.jpg</image:loc>
-      <image:title>Balaga Raghuram at University of Birmingham Campus in Three Seasons</image:title>
-      <image:caption>Balaga Raghuram at University of Birmingham campus showing autumn winter and spring</image:caption>
+      <image:title>Balaga Raghuram at University of Birmingham</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-edinburgh-early-morning.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-edinburgh-early-morning.jpg</image:loc>
-      <image:title>Balaga Raghuram Early Morning Walk in Edinburgh Scotland</image:title>
-      <image:caption>Balaga Raghuram morning walk in Edinburgh old town Scotland UK</image:caption>
+      <image:title>Balaga Raghuram in Edinburgh Scotland</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-uk-snow-experience.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-uk-snow-experience.jpg</image:loc>
-      <image:title>Balaga Raghuram Amazing UK Snow Experience at Night</image:title>
-      <image:caption>Balaga Raghuram experiencing heavy snowfall in UK winter night</image:caption>
+      <image:title>Balaga Raghuram UK Snow Experience</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-london-bridge-night.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-london-bridge-night2.jpg</image:loc>
-      <image:title>Balaga Raghuram at Tower Bridge London at Night</image:title>
-      <image:caption>Balaga Raghuram at iconic Tower Bridge London illuminated at night</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balaga-raghuram-london-bridge-night1.jpg</image:loc>
-      <image:title>Balaga Raghuram London Bridge Night Photography</image:title>
-      <image:caption>Balaga Raghuram night photography at London Bridge</image:caption>
+      <image:title>Balaga Raghuram at Tower Bridge London</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-amazing-uk-snow.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-uk-amazing-snow.jpg</image:loc>
-      <image:title>Balaga Raghuram Amazing UK Snow Winter Scene</image:title>
-      <image:caption>Balaga Raghuram beautiful UK winter snow landscape</image:caption>
+      <image:title>Balaga Raghuram UK Snow Scene</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-uob-museum.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-uob-museum-trex.jpg</image:loc>
-      <image:title>Balaga Raghuram with T-Rex Dinosaur Skull at UOB Museum</image:title>
-      <image:caption>Balaga Raghuram with T-Rex dinosaur skull at University of Birmingham museum</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balaga-raghuram-uob-museum.jpg</image:loc>
-      <image:title>Balaga Raghuram at University of Birmingham Museum Gallery</image:title>
-      <image:caption>Balaga Raghuram exploring University of Birmingham museum gallery</image:caption>
+      <image:title>Balaga Raghuram at UOB Museum</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balagaraghuram_university_of_cambridge_conference.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balagaraghuram_cambridgeuniversity_conference.jpg</image:loc>
-      <image:title>Balaga Raghuram at Cambridge University Data Analytics Conference</image:title>
-      <image:caption>Balaga Raghuram participating in Cambridge University conference</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://balagaraghuram.github.io/balagaraghuram_newton_institute_of_mathematical_sciences_university_of_cambridge.html</loc>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balagaraghuram_newtoninstituteofmathematicssciences_universityofcambridge.jpg</image:loc>
-      <image:title>Balaga Raghuram at Newton Institute Cambridge University</image:title>
-      <image:caption>Balaga Raghuram at Cambridge University Newton Institute of Mathematical Sciences</image:caption>
+      <image:title>Balaga Raghuram at Cambridge University</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_conference.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_conference1.jpg</image:loc>
-      <image:title>Balaga Raghuram at Oxford Mathematical Institute Conference</image:title>
-      <image:caption>Balaga Raghuram at Oxford University mathematical sciences conference</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_conference2.jpg</image:loc>
-      <image:title>Balaga Raghuram Oxford University Conference Presentation</image:title>
-      <image:caption>Balaga Raghuram presenting at Oxford University conference</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_conference3.jpg</image:loc>
-      <image:title>Balaga Raghuram at Oxford University Research Event</image:title>
-      <image:caption>Balaga Raghuram at Oxford University research gathering</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_conference4.jpg</image:loc>
-      <image:title>Balaga Raghuram Oxford Mathematical Institute Campus</image:title>
-      <image:caption>Balaga Raghuram at Oxford Mathematical Institute</image:caption>
+      <image:title>Balaga Raghuram at Oxford University</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_forum.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_forum.jpg</image:loc>
-      <image:title>Balaga Raghuram at Oxford University Forum</image:title>
-      <image:caption>Balaga Raghuram at Oxford University forum with global experts</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_forum1.jpg</image:loc>
-      <image:title>Balaga Raghuram Oxford Forum Discussion</image:title>
-      <image:caption>Balaga Raghuram in discussion at Oxford forum</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balagaraghuram_oxford_university_forum2.jpg</image:loc>
-      <image:title>Balaga Raghuram at Oxford Innovation Forum</image:title>
-      <image:caption>Balaga Raghuram at Oxford innovation and foresight forum</image:caption>
+      <image:title>Balaga Raghuram at Oxford Forum</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balagaraghuram_lancaster_winter_school.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balagaraghuram_lancaster_winter_school.jpg</image:loc>
-      <image:title>Balaga Raghuram at Lancaster University Winter School</image:title>
-      <image:caption>Balaga Raghuram at Lancaster University funded winter school program</image:caption>
+      <image:title>Balaga Raghuram at Lancaster Winter School</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/winterschooluniversityofedinburgh.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/winterschool1.jpg</image:loc>
-      <image:title>Balaga Raghuram at Edinburgh University Winter School</image:title>
-      <image:caption>Balaga Raghuram at University of Edinburgh funded winter school</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/winterschool2.jpg</image:loc>
-      <image:title>Balaga Raghuram Edinburgh Winter School Event</image:title>
-      <image:caption>Balaga Raghuram at Edinburgh winter school event</image:caption>
+      <image:title>Balaga Raghuram at Edinburgh Winter School</image:title>
     </image:image>
   </url>
   <url>
@@ -153,25 +90,13 @@
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balagaraghuram_manchester_techmeetup.jpg</image:loc>
       <image:title>Balaga Raghuram at Manchester Tech Meetup</image:title>
-      <image:caption>Balaga Raghuram at Manchester technology professionals meetup</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balagaraghuram_manchester_techmeetup1.jpg</image:loc>
-      <image:title>Balaga Raghuram Manchester Tech Event</image:title>
-      <image:caption>Balaga Raghuram networking at Manchester tech event</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-data-scientist-role-nhs-oncology-risk-model_portfolio.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-nhs.jpg</image:loc>
-      <image:title>Balaga Raghuram NHS Data Scientist Portfolio</image:title>
-      <image:caption>Balaga Raghuram NHS oncology AI risk stratification model portfolio</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balaga-raghuram-google-cloud.jpg</image:loc>
-      <image:title>Google Cloud Platform Deployment by Balaga Raghuram</image:title>
-      <image:caption>Balaga Raghuram Google Cloud Run deployment for NHS</image:caption>
+      <image:title>Balaga Raghuram NHS Portfolio</image:title>
     </image:image>
   </url>
 </urlset>
