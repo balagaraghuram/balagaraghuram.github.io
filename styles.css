@@ -376,6 +376,10 @@ img {
     transform: translateX(0);
 }
 
+.card-static .card-title::after {
+    content: none;
+}
+
 .card-meta {
     font-size: 0.8rem;
     color: var(--text-muted);
