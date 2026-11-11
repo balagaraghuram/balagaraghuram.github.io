@@ -380,36 +380,20 @@ img {
     content: none;
 }
 
-.role-card {
+.role-line {
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
+    flex-wrap: wrap;
 }
 
-.role-photo {
-    width: 140px;
-    height: 140px;
+.role-photo-inline {
+    width: 80px;
+    height: 80px;
     object-fit: cover;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 4px 20px var(--shadow);
     flex-shrink: 0;
-}
-
-.role-info {
-    flex: 1;
-}
-
-@media (max-width: 640px) {
-    .role-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .role-photo {
-        width: 120px;
-        height: 120px;
-    }
 }
 
 .card-meta {
