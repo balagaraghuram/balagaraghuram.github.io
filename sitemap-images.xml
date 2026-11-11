@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>https://balagaraghuram.github.io/</loc>
+    <image:image>
+      <image:loc>https://balagaraghuram.github.io/balaga-raghuram-data-scientist-nhs-england.jpg</image:loc>
+      <image:title>Balaga Raghuram Data Scientist NHS England</image:title>
+      <image:caption>Official photo of Balaga Raghuram, Data Scientist at NHS England, United Kingdom.</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-canary-wharf-london.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-canary-wharf.jpg</image:loc>
