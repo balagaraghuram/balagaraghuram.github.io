@@ -9,6 +9,14 @@
     </image:image>
   </url>
   <url>
+    <loc>https://balagaraghuram.github.io/balaga-raghuram-about.html</loc>
+    <image:image>
+      <image:loc>https://balagaraghuram.github.io/balaga-raghuram-data-scientist-nhs-england.jpg</image:loc>
+      <image:title>About Balaga Raghuram - Data Scientist NHS England official profile</image:title>
+      <image:caption>Official profile photo of Balaga Raghuram, Data Scientist at NHS England, on his About page.</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-canary-wharf-london.html</loc>
     <image:image>
       <image:loc>https://balagaraghuram.github.io/balaga-raghuram-canary-wharf.jpg</image:loc>
