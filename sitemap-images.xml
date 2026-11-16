@@ -135,16 +135,6 @@
       <image:title>Balaga Raghuram at Zurich International Airport</image:title>
       <image:caption>Balaga Raghuram at Zurich International Airport, Switzerland.</image:caption>
     </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balaga-raghuram-gcp-cloud-run.jpg</image:loc>
-      <image:title>Balaga Raghuram Google Cloud Run</image:title>
-      <image:caption>Balaga Raghuram - Google Cloud Run deployment.</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balaga-raghuram-google-cloud.jpg</image:loc>
-      <image:title>Balaga Raghuram Google Cloud Platform</image:title>
-      <image:caption>Balaga Raghuram - Google Cloud Platform.</image:caption>
-    </image:image>
   </url>
   <url>
     <loc>https://balagaraghuram.github.io/balaga-raghuram-canary-wharf-london.html</loc>
