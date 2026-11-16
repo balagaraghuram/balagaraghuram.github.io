@@ -369,12 +369,4 @@
       <image:caption>Abu Dhabi Reporter article featuring Balaga Raghuram and Research 247 UAE.</image:caption>
     </image:image>
   </url>
-  <url>
-    <loc>https://balagaraghuram.github.io/balaga-raghuram-current-role-data-scientist-nhs-oncology-risk-model_portfolio.html</loc>
-    <image:image>
-      <image:loc>https://balagaraghuram.github.io/balaga-raghuram-nhs.jpg</image:loc>
-      <image:title>Balaga Raghuram NHS England oncology AI portfolio</image:title>
-      <image:caption>Balaga Raghuram NHS England oncology risk model portfolio, machine learning for healthcare.</image:caption>
-    </image:image>
-  </url>
 </urlset>
